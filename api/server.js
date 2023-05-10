@@ -1,11 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
+const helmetCsp = require('helmet-csp');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(helmet());
+
+app.use(helmetCsp({
+	directives: {
+		defaultSrc: ["'self'"], 
+		scriptSrc: ["'self'"],
+		styleSrc: ["'self'"],
+		imgSrc: ["'self'"],
+		objectSrc: ["'none'"],
+	  },
+}))
 
 mongoose.connect('mongodb://127.0.0.1:27017/react-todo', {
 	useNewUrlParser: true, 
